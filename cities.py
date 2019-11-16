@@ -1,4 +1,5 @@
 def read_cities(file_name):
+    return 1
     """
     Read in the cities from the given `file_name`, and return 
     them as a list of four-tuples: 
@@ -12,6 +13,7 @@ def read_cities(file_name):
     pass
   
 def print_cities(road_map):
+    return 1
     """
     Prints a list of cities, along with their locations. 
     Print only one or two digits after the decimal point.
@@ -19,6 +21,7 @@ def print_cities(road_map):
     pass
 
 def compute_total_distance(road_map):
+    return 1
     """
     Returns, as a floating point number, the sum of the distances of all 
     the connections in the `road_map`. Remember that it's a cycle, so that 
@@ -27,6 +30,7 @@ def compute_total_distance(road_map):
 
 
 def swap_cities(road_map, index1, index2):
+    return 1
     """
     Take the city at location `index` in the `road_map`, and the 
     city at location `index2`, swap their positions in the `road_map`, 
@@ -39,6 +43,7 @@ def swap_cities(road_map, index1, index2):
     """
 
 def shift_cities(road_map):
+    return 1
     """
     For every index i in the `road_map`, the city at the position i moves
     to the position i+1. The city at the last position moves to the position
@@ -46,6 +51,7 @@ def shift_cities(road_map):
     """
 
 def find_best_cycle(road_map):
+    return 1
     """
     Using a combination of `swap_cities` and `shift_cities`, 
     try `10000` swaps/shifts, and each time keep the best cycle found so far. 
@@ -55,6 +61,7 @@ def find_best_cycle(road_map):
     pass
 
 def print_map(road_map):
+    return 1
     """
     Prints, in an easily understandable format, the cities and 
     their connections, along with the cost for each connection 
@@ -63,6 +70,7 @@ def print_map(road_map):
     pass
 
 def main():
+    return 1
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
