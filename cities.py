@@ -21,7 +21,7 @@ def print_cities(road_map):
     pass
 
 def compute_total_distance(road_map):
-    return 1
+    return -999999
     """
     Returns, as a floating point number, the sum of the distances of all 
     the connections in the `road_map`. Remember that it's a cycle, so that 
@@ -30,7 +30,7 @@ def compute_total_distance(road_map):
 
 
 def swap_cities(road_map, index1, index2):
-    return 1
+    return ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
     """
     Take the city at location `index` in the `road_map`, and the 
     city at location `index2`, swap their positions in the `road_map`, 
@@ -43,7 +43,7 @@ def swap_cities(road_map, index1, index2):
     """
 
 def shift_cities(road_map):
-    return 1
+    return ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
     """
     For every index i in the `road_map`, the city at the position i moves
     to the position i+1. The city at the last position moves to the position
