@@ -37,7 +37,23 @@ def print_cities(road_map):
     pass
 
 def compute_total_distance(road_map):
-    return -999999
+    #sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+    import math
+    distance = 0
+
+    for i in range(0,len(road_map)-1):
+        x = (road_map[i][2] - road_map[i+1][2])**2
+        y = (road_map[i][3] - road_map[i+1][3])**2
+        distance += math.sqrt(x+y)
+
+    x_last = (road_map[len(road_map)-1][2] - road_map[0][2])**2
+    y_last = (road_map[len(road_map)-1][3] - road_map[0][3])**2
+
+    last_distance = math.sqrt(x_last+y_last)
+
+    total_distance = distance + last_distance
+
+    return total_distance #-999999
     """
     Returns, as a floating point number, the sum of the distances of all 
     the connections in the `road_map`. Remember that it's a cycle, so that 
@@ -96,7 +112,7 @@ def main():
 if __name__ == "__main__": #keep this in
     main()
     road_map = read_cities('city-data.txt')
-    print_cities(road_map)
-    #print(road_map)
-    #print(len(road_map))
+    total_distance = compute_total_distance(road_map)
+    print(total_distance)
+
 
