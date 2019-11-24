@@ -22,8 +22,8 @@ def test_swap_cities():
                  ('Connecticut', 'Hartford', 41.767, -72.677),\
                  ('Delaware', 'Dover', 39.161921, -75.526755),\
                  ('Florida', 'Tallahassee', 30.4518, -84.27277)]
-    index1 = 2
-    index2 = 5
+    index1 = 'Phoenix'
+    index2 = 'Denver'
     assert swap_cities(road_map1, index1, index2)==\
            ([('Alabama', 'Montgomery', 32.361538, -86.279118),\
              ('Alaska', 'Juneau', 58.301935, -134.41974),\

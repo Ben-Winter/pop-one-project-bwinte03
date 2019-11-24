@@ -60,9 +60,25 @@ def compute_total_distance(road_map):
     (for example) in the initial `road_map`, Wyoming connects to Alabama...
     """
 
-
 def swap_cities(road_map, index1, index2):
-    return ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
+    new_road_map = road_map
+    for i in range(len(new_road_map)):
+        if new_road_map[i][1] == index1:
+            a = new_road_map[i]
+            print(a)
+        elif new_road_map[i][1] == index2:
+            b = new_road_map[i]
+            print(b)
+
+    for i in range(len(new_road_map)):
+        if new_road_map[i][1] == index1:
+            new_road_map[i] = b
+        elif new_road_map[i][1] == index2:
+            new_road_map[i] = a
+
+    # WHAT HAPPENS IF INDEX 1 = INDEX 2
+
+    return (new_road_map, compute_total_distance(new_road_map)) # ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
     """
     Take the city at location `index` in the `road_map`, and the 
     city at location `index2`, swap their positions in the `road_map`, 
@@ -114,5 +130,8 @@ if __name__ == "__main__": #keep this in
     road_map = read_cities('city-data.txt')
     total_distance = compute_total_distance(road_map)
     print(total_distance)
+    swapped = swap_cities(road_map, 'Montgomery', 'Montgomery')
+    print(swapped)
+
 
 
