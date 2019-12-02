@@ -61,23 +61,22 @@ def compute_total_distance(road_map):
     """
 
 def swap_cities(road_map, index1, index2):
-    new_road_map = road_map
     if index1 == index2:
-        return (new_road_map, compute_total_distance(new_road_map))
+        return (road_map, compute_total_distance(road_map))
 
-    for i in range(len(new_road_map)):
-        if new_road_map[i][1] == index1:
-            a = new_road_map[i]
-        elif new_road_map[i][1] == index2:
-            b = new_road_map[i]
+    for i in range(len(road_map)):
+        if road_map[i][1] == index1:
+            a = road_map[i]
+        elif road_map[i][1] == index2:
+            b = road_map[i]
 
-    for i in range(len(new_road_map)):
-        if new_road_map[i][1] == index1:
-            new_road_map[i] = b
-        elif new_road_map[i][1] == index2:
-            new_road_map[i] = a
+    for i in range(len(road_map)):
+        if road_map[i][1] == index1:
+            road_map[i] = b
+        elif road_map[i][1] == index2:
+            road_map[i] = a
 
-    return (new_road_map, compute_total_distance(new_road_map)) # ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
+    return (road_map, compute_total_distance(road_map)) # ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
     """
     Take the city at location `index` in the `road_map`, and the 
     city at location `index2`, swap their positions in the `road_map`, 
@@ -90,7 +89,13 @@ def swap_cities(road_map, index1, index2):
     """
 
 def shift_cities(road_map):
-    return ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
+    new_map = [road_map[-1]]
+    new_map.extend(road_map)
+    new_map.pop(-1)
+    for i in range(len(road_map)):
+        road_map[i] = new_map[i]
+    return road_map
+    #return ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
     """
     For every index i in the `road_map`, the city at the position i moves
     to the position i+1. The city at the last position moves to the position
@@ -127,10 +132,17 @@ def main():
 if __name__ == "__main__": #keep this in
     main()
     road_map = read_cities('city-data.txt')
+    print(road_map)
     total_distance = compute_total_distance(road_map)
     print(total_distance)
-    swapped = swap_cities(road_map, 'Montgomery', 'Phoenix')
-    print(swapped)
-
+    swap_cities(road_map, 'Montgomery', 'Phoenix')
+    print(road_map)
+    print(len(road_map))
+    shift_cities(road_map)
+    print(road_map)
+    print(len(road_map))
+    shift_cities(road_map)
+    print(road_map)
+    print(len(road_map))
 
 

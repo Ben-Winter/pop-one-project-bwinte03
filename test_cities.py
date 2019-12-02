@@ -49,13 +49,26 @@ def test_swap_cities():
     # add tests for if indexes equal
 
 def test_shift_cities():
-    road_map1 = [("Kentucky", "Frankfort", 38.197274, -84.86311),\
-                ("Delaware", "Dover", 39.161921, -75.526755),\
-                ("Minnesota", "Saint Paul", 44.95, -93.094)]
+    road_map1 = [('Alabama', 'Montgomery', 32.361538, -86.279118),\
+                 ('Alaska', 'Juneau', 58.301935, -134.41974),\
+                 ('Arizona', 'Phoenix', 33.448457, -112.073844),\
+                 ('Arkansas', 'Little Rock', 34.736009, -92.331122),\
+                 ('California', 'Sacramento', 38.555605, -121.468926),\
+                 ('Colorado', 'Denver', 39.7391667, -104.984167),\
+                 ('Connecticut', 'Hartford', 41.767, -72.677),\
+                 ('Delaware', 'Dover', 39.161921, -75.526755),\
+                 ('Florida', 'Tallahassee', 30.4518, -84.27277)]
     assert shift_cities(road_map1)== \
-           [("Minnesota", "Saint Paul", 44.95, -93.094),\
-            ("Delaware", "Dover", 39.161921, -75.526755), \
-            ("Kentucky", "Frankfort", 38.197274, -84.86311)]
+           [('Florida', 'Tallahassee', 30.4518, -84.27277), \
+            ('Alabama', 'Montgomery', 32.361538, -86.279118),\
+            ('Alaska', 'Juneau', 58.301935, -134.41974), \
+            ('Arizona', 'Phoenix', 33.448457, -112.073844), \
+            ('Arkansas', 'Little Rock', 34.736009, -92.331122), \
+            ('California', 'Sacramento', 38.555605, -121.468926), \
+            ('Colorado', 'Denver', 39.7391667, -104.984167), \
+            ('Connecticut', 'Hartford', 41.767, -72.677), \
+            ('Delaware', 'Dover', 39.161921, -75.526755)]
+    assert len(shift_cities(road_map1)) == len(road_map1)
     '''add your tests'''
 
 
