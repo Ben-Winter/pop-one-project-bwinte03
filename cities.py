@@ -1,3 +1,5 @@
+import random
+
 def read_cities(file_name):
     infile = open(file_name, 'r')
 
@@ -103,7 +105,20 @@ def shift_cities(road_map):
     """
 
 def find_best_cycle(road_map):
-    return 1
+    x = 0
+    best_map = road_map
+    best_distance = compute_total_distance(road_map)
+    while x <= 10000:
+        new_map1 = shift_cities(road_map)
+        num1 = round((len(road_map) - 1) * random.random())
+        num2 = round((len(road_map) - 1) * random.random())
+        new_map2 = swap_cities(new_map1, new_map1[num1][1], new_map1[num2][1])
+        check_distance = new_map2[1]
+        if check_distance < best_distance:
+            best_distance = check_distance
+            best_map = new_map2
+        x += 1
+    return best_map
     """
     Using a combination of `swap_cities` and `shift_cities`, 
     try `10000` swaps/shifts, and each time keep the best cycle found so far. 
@@ -132,7 +147,11 @@ def main():
 if __name__ == "__main__": #keep this in
     main()
     road_map = read_cities('city-data.txt')
-    print(road_map)
+    best = find_best_cycle(road_map)
+    print(best)
+
+'''
+   print(road_map)
     total_distance = compute_total_distance(road_map)
     print(total_distance)
     swap_cities(road_map, 'Montgomery', 'Phoenix')
@@ -144,5 +163,5 @@ if __name__ == "__main__": #keep this in
     shift_cities(road_map)
     print(road_map)
     print(len(road_map))
-
-
+    best = find_best_cycle(road_map)
+'''
