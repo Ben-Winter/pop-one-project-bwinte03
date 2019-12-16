@@ -1,3 +1,4 @@
+import math
 import random
 
 def read_cities(file_name):
@@ -29,18 +30,8 @@ def read_cities(file_name):
     """
     pass
   
-def print_cities(road_map):
-    for i in range(0, len(road_map)):
-        print(road_map[i][1]+" "+str(round(road_map[i][2],2))+" "+str(round(road_map[i][3],2)))
-    """
-    Prints a list of cities, along with their locations. 
-    Print only one or two digits after the decimal point.
-    """
-    pass
-
 def compute_total_distance(road_map):
     #sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
-    import math
     distance = 0
 
     for i in range(0,len(road_map)-1):
@@ -61,6 +52,15 @@ def compute_total_distance(road_map):
     the connections in the `road_map`. Remember that it's a cycle, so that 
     (for example) in the initial `road_map`, Wyoming connects to Alabama...
     """
+
+def print_cities(road_map):
+    for i in range(0, len(road_map)):
+        print(road_map[i][1]+" "+str(round(road_map[i][2],2))+" "+str(round(road_map[i][3],2)))
+    """
+    Prints a list of cities, along with their locations. 
+    Print only one or two digits after the decimal point.
+    """
+    pass
 
 def swap_cities(road_map, index1, index2):
     if index1 == index2:
@@ -128,7 +128,14 @@ def find_best_cycle(road_map):
     pass
 
 def print_map(road_map):
-    return 1
+    for i in range(0, len(road_map[0])-1):
+        x = (road_map[0][i][2] - road_map[0][i+1][2])**2
+        y = (road_map[0][i][3] - road_map[0][i+1][3])**2
+        dist = round(math.sqrt(x + y),2)
+        print(road_map[0][i][0].ljust(20)+"-->".ljust(10)+road_map[0][i+1][0].ljust(20)+\
+              "Cost: "+str(dist))
+    print("Total Cost: ", str(round(road_map[1],2)))
+
     """
     Prints, in an easily understandable format, the cities and 
     their connections, along with the cost for each connection 
@@ -137,7 +144,21 @@ def print_map(road_map):
     pass
 
 def main():
-    return 1
+    road_map = read_cities('city-data.txt')
+    starting_distance = round(compute_total_distance(road_map),2)
+    print('### STARTING ROAD MAP ###')
+    print('-------------------------')
+    print_cities(road_map)
+    print('')
+    print('### STARTING DISTANCE ###')
+    print('-------------------------')
+    print(starting_distance)
+    print('')
+    best = find_best_cycle(road_map)
+    print('### BEST CYCLE & DISTANCE ###')
+    print('-------------------------')
+    print_map(best)
+    print('-------------------------')
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
@@ -146,9 +167,6 @@ def main():
 
 if __name__ == "__main__": #keep this in
     main()
-    road_map = read_cities('city-data.txt')
-    best = find_best_cycle(road_map)
-    print(best)
 
 '''
    print(road_map)
