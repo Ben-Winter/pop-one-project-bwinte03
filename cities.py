@@ -159,6 +159,37 @@ def main():
     print('-------------------------')
     print_map(best)
     print('-------------------------')
+
+    # Trying to build visualisation (needs to go into a function)
+    x = []
+    for v in range(0, len(road_map)):
+        x.append(road_map[v][2])
+    y = []
+    for w in range(0, len(road_map)):
+        y.append(road_map[w][3])
+
+    x_max = round(max(x)+1)
+    x_min = round(min(x)-1)
+    y_max = round(max(y)+1)
+    y_min = round(min(y)-1)
+
+    print(str('').ljust(5), end='')
+    for s in range(y_min, y_max, 1):
+        print(str(s).ljust(2), end=" ")
+    # TOP ROW IS NOT FORMATTED
+    print()
+    for i in range(x_min, x_max, 1):
+        print(str(i).ljust(4), end='  ')
+        for j in range(y_min, y_max, 1):
+            for k in range(0, len(road_map)):
+                if i == round((road_map[k][2])) and j == round((road_map[k][3])):
+                    print(str(k).ljust(3), end="  ")
+                    break
+            else:
+                print(str('.').ljust(3), end="  ")
+        print()
+
+
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
@@ -167,6 +198,8 @@ def main():
 
 if __name__ == "__main__": #keep this in
     main()
+
+
 
 '''
    print(road_map)
@@ -182,4 +215,26 @@ if __name__ == "__main__": #keep this in
     print(road_map)
     print(len(road_map))
     best = find_best_cycle(road_map)
+    
+    
+        print(str('').ljust(5), end='')
+    for s in range(-9, 10, 1):
+        if s < -1:
+            print(s, end='  ')
+        elif s == -1:
+            print(s, end='   ')
+        else:
+            print(s, end='   ')
+    print()
+    for i in range(-18, 19, 1):
+        print(str(i).ljust(5), end=' ')
+        for j in range(-9, 10, 1):
+            for k in range(0, len(road_map[0])-1):
+                if i == round((road_map[0][k][2])/10) and j == round((road_map[0][k][3])/10):
+                    print('0', end="   ")
+                else:
+                    print('x', end="   ")
+            print()
+    
+    
 '''
