@@ -132,7 +132,7 @@ def print_map(road_map):
         x = (road_map[0][i][2] - road_map[0][i+1][2])**2
         y = (road_map[0][i][3] - road_map[0][i+1][3])**2
         dist = round(math.sqrt(x + y),2)
-        print(str(i).ljust(3)+". "+road_map[0][i][0].ljust(20)+"-->".ljust(10)+str(i+1).ljust(3)+". "+road_map[0][i+1][0].ljust(20)+\
+        print(str(i).ljust(3)+". "+road_map[0][i][1].ljust(20)+"-->".ljust(10)+str(i+1).ljust(3)+". "+road_map[0][i+1][1].ljust(20)+\
               "Cost: "+str(dist))
     print()
     print("Total Cost: ", str(round(road_map[1],2)))
@@ -145,6 +145,7 @@ def print_map(road_map):
     pass
 
 def visualise(road_map):
+
     x = []
     for v in range(0, len(road_map)):
         x.append(road_map[v][2])
@@ -152,6 +153,7 @@ def visualise(road_map):
     for w in range(0, len(road_map)):
         y.append(road_map[w][3])
 
+    # Dynamically set boundaries for map and extend by 1 to ensure nothing out of bounds from rounding
     x_max = round(max(x) + 1)
     x_min = round(min(x) - 1)
     y_max = round(max(y) + 1)
