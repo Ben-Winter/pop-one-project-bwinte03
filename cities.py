@@ -46,7 +46,7 @@ def compute_total_distance(road_map):
 
     total_distance = distance + last_distance
 
-    return total_distance #-999999
+    return total_distance
     """
     Returns, as a floating point number, the sum of the distances of all 
     the connections in the `road_map`. Remember that it's a cycle, so that 
@@ -176,7 +176,11 @@ def visualise(road_map):
         print()
 
 def main():
-    road_map = read_cities('city-data.txt')
+    try:
+        road_map = read_cities('city-data.txt')
+    except OSError:
+        print('Could not open/read file - check file name is "city-data.txt" and data saved in same directory as cities.py')
+        exit()
     starting_distance = round(compute_total_distance(road_map),2)
     print('### STARTING ROAD MAP ###')
     print('-------------------------')
