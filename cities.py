@@ -54,8 +54,9 @@ def compute_total_distance(road_map):
     """
 
 def print_cities(road_map):
+    print(str('City').ljust(20)+str('Latitude').ljust(10)+str('Longitude').ljust(10))
     for i in range(0, len(road_map)):
-        print(road_map[i][1]+" "+str(round(road_map[i][2],2))+" "+str(round(road_map[i][3],2)))
+        print(str(road_map[i][1]).ljust(20)+str(round(road_map[i][2],2)).ljust(10)+str(round(road_map[i][3],2)).ljust(10))
     """
     Prints a list of cities, along with their locations. 
     Print only one or two digits after the decimal point.
@@ -78,7 +79,7 @@ def swap_cities(road_map, index1, index2):
         elif road_map[i][1] == index2:
             road_map[i] = a
 
-    return (road_map, compute_total_distance(road_map)) # ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
+    return (road_map, compute_total_distance(road_map))
     """
     Take the city at location `index` in the `road_map`, and the 
     city at location `index2`, swap their positions in the `road_map`, 
@@ -97,28 +98,32 @@ def shift_cities(road_map):
     for i in range(len(road_map)):
         road_map[i] = new_map[i]
     return road_map
-    #return ([('Nonesense_State', 'Nonesense__City', 999999.999999, 999999.999999)])
+
     """
     For every index i in the `road_map`, the city at the position i moves
     to the position i+1. The city at the last position moves to the position
     0. Return the new road map. 
     """
 
-def find_best_cycle(road_map):
-    x = 0
+def find_best_cycle(road_map): ### THIS CODE IS WRONG - NEED DEBUGGING
+
+    counter = 0
     best_map = road_map
     best_distance = compute_total_distance(road_map)
-    while x <= 10000:
-        new_map1 = shift_cities(road_map)
-        num1 = round((len(road_map) - 1) * random.random())
-        num2 = round((len(road_map) - 1) * random.random())
+    while counter <= 10:
+        new_map1 = shift_cities(best_map)
+        num1 = round((len(new_map1) - 1) * random.random())
+        num2 = round((len(new_map1) - 1) * random.random())
         new_map2 = swap_cities(new_map1, new_map1[num1][1], new_map1[num2][1])
         check_distance = new_map2[1]
+        check_map = new_map2[0]
         if check_distance < best_distance:
             best_distance = check_distance
-            best_map = new_map2
-        x += 1
-    return best_map
+            best_map = check_map
+        print(best_map)
+        print(best_distance)
+        counter += 1
+    return (best_map, compute_total_distance(best_map))
     """
     Using a combination of `swap_cities` and `shift_cities`, 
     try `10000` swaps/shifts, and each time keep the best cycle found so far. 
@@ -127,7 +132,8 @@ def find_best_cycle(road_map):
     """
     pass
 
-def print_map(road_map):
+def print_map(road_map): ## NEEDS TO PRINT THE RETURN HOME JOURNEY!!
+
     for i in range(0, len(road_map[0])-1):
         x = (road_map[0][i][2] - road_map[0][i+1][2])**2
         y = (road_map[0][i][3] - road_map[0][i+1][3])**2
@@ -192,18 +198,21 @@ def main():
     print('')
     best = find_best_cycle(road_map)
     print('### BEST CYCLE & DISTANCE ###')
-    print('-------------------------')
+    print('-----------------------------')
     print_map(best)
-    print('-------------------------')
-    print('### VISUALISATION ###')
-    print('-------------------------')
+    print('-----------------------------------------------------------------------------')
+    print('### VISUALISATION (VERTICAL AXIS = LATITUDE, HORIZONTAL AXIS = LONGITUDE) ###')
+    print('###                  ^ Key for cities displayed above ^                   ###')
+    print('-----------------------------------------------------------------------------')
     visualise(road_map)
 
+    print(best)
+    print(compute_total_distance(best[0]))
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
     """
     pass
 
-if __name__ == "__main__": #keep this in
+if __name__ == "__main__":
     main()
