@@ -1,5 +1,6 @@
 import math
 import random
+import copy
 
 def read_cities(file_name):
     infile = open(file_name, 'r')
@@ -105,25 +106,53 @@ def shift_cities(road_map):
     0. Return the new road map. 
     """
 
-def find_best_cycle(road_map): ### THIS CODE IS WRONG - NEED DEBUGGING
+def find_best_cycle(road_map):
 
     counter = 0
-    best_map = road_map
     best_distance = compute_total_distance(road_map)
-    while counter <= 10:
-        new_map1 = shift_cities(best_map)
+    best_map = road_map
+    while counter < 10000:
+        new_map1 = shift_cities(road_map)
         num1 = round((len(new_map1) - 1) * random.random())
         num2 = round((len(new_map1) - 1) * random.random())
         new_map2 = swap_cities(new_map1, new_map1[num1][1], new_map1[num2][1])
-        check_distance = new_map2[1]
-        check_map = new_map2[0]
-        if check_distance < best_distance:
-            best_distance = check_distance
-            best_map = check_map
-        print(best_map)
-        print(best_distance)
+        if new_map2[1] < best_distance:
+            best_distance = new_map2[1]
+            best_map = copy.copy(new_map2[0])
         counter += 1
-    return (best_map, compute_total_distance(best_map))
+
+    return (best_map, best_distance)
+
+    #counter = 0
+    #continue_map = road_map
+    #best_map = road_map
+    #print("FIRST best map", best_map)
+    #best_distance = compute_total_distance(road_map)
+    #while counter <= 20:
+    #    new_map1 = shift_cities(continue_map)
+    #    num1 = round((len(new_map1) - 1) * random.random())
+    #    num2 = round((len(new_map1) - 1) * random.random())
+    #    new_map2 = swap_cities(new_map1, new_map1[num1][1], new_map1[num2][1])
+    #    print(new_map2)
+    #    check_distance = new_map2[1]
+    #    print("Check dist:", check_distance)
+    #    print("Check best dist:", best_distance)
+    #    if float(check_distance) < float(best_distance):
+    #        best_distance = check_distance
+    #        best_map = new_map2[0]
+    #        print("Best_Map: ", best_map)
+    #        print("Best Dist: ", best_distance)
+    #        continue_map = new_map2[0]
+    #    else:
+    #        continue_map = new_map2[0]
+    #        print("Best_Map2: ", best_map)
+    #    counter += 1
+
+    #print(best_map)
+    #print(compute_total_distance(best_map))
+    #print(best_distance)
+
+    #return (best_map, compute_total_distance(best_map))
     """
     Using a combination of `swap_cities` and `shift_cities`, 
     try `10000` swaps/shifts, and each time keep the best cycle found so far. 
