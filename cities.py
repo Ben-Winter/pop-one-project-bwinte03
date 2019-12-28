@@ -167,8 +167,15 @@ def print_map(road_map): ## NEEDS TO PRINT THE RETURN HOME JOURNEY!!
         x = (road_map[0][i][2] - road_map[0][i+1][2])**2
         y = (road_map[0][i][3] - road_map[0][i+1][3])**2
         dist = round(math.sqrt(x + y),2)
-        print(str(i).ljust(3)+". "+road_map[0][i][1].ljust(20)+"-->".ljust(10)+str(i+1).ljust(3)+". "+road_map[0][i+1][1].ljust(20)+\
-              "Cost: "+str(dist))
+        print(str(i).ljust(3)+". "+road_map[0][i][1].ljust(20)+"-->".ljust(10)+\
+              str(i+1).ljust(3)+". "+road_map[0][i+1][1].ljust(20)+"Cost: "+str(dist))
+
+    x = (road_map[0][len(road_map[0])-1][2] - road_map[0][0][2])**2
+    y = (road_map[0][len(road_map[0])-1][3] - road_map[0][0][3])**2
+    dist = round(math.sqrt(x + y),2)
+    print(str(len(road_map[0])-1).ljust(3) + ". " + road_map[0][len(road_map[0])-1][1].ljust(20) + "-->".ljust(10) + \
+          str(0).ljust(3) + ". " + road_map[0][0][1].ljust(20) + "Cost: " + str(dist))
+
     print()
     print("Total Cost: ", str(round(road_map[1],2)))
 
@@ -235,8 +242,6 @@ def main():
     print('-----------------------------------------------------------------------------')
     visualise(road_map)
 
-    print(best)
-    print(compute_total_distance(best[0]))
     """
     Reads in, and prints out, the city data, then creates the "best"
     cycle and prints it out.
