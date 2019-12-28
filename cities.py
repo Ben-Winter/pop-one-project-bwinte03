@@ -55,7 +55,7 @@ def compute_total_distance(road_map):
     """
 
 def print_cities(road_map):
-    print(str('City').ljust(20)+str('Latitude').ljust(10)+str('Longitude').ljust(10))
+    print(str('CITY').ljust(20)+str('LATITUDE').ljust(10)+str('LONGITUDE').ljust(10))
     for i in range(0, len(road_map)):
         print(str(road_map[i][1]).ljust(20)+str(round(road_map[i][2],2)).ljust(10)+str(round(road_map[i][3],2)).ljust(10))
     """
@@ -161,7 +161,7 @@ def find_best_cycle(road_map):
     """
     pass
 
-def print_map(road_map): ## NEEDS TO PRINT THE RETURN HOME JOURNEY!!
+def print_map(road_map):
 
     for i in range(0, len(road_map[0])-1):
         x = (road_map[0][i][2] - road_map[0][i+1][2])**2
@@ -240,7 +240,7 @@ def main():
     print('### VISUALISATION (VERTICAL AXIS = LATITUDE, HORIZONTAL AXIS = LONGITUDE) ###')
     print('###                  ^ Key for cities displayed above ^                   ###')
     print('-----------------------------------------------------------------------------')
-    visualise(road_map)
+    visualise(best[0])
 
     """
     Reads in, and prints out, the city data, then creates the "best"
