@@ -111,7 +111,7 @@ def find_best_cycle(road_map):
     counter = 0
     best_distance = compute_total_distance(road_map)
     best_map = road_map
-    while counter < 10000:
+    while counter <= 10000:
         new_map1 = shift_cities(road_map)
         num1 = round((len(new_map1) - 1) * random.random())
         num2 = round((len(new_map1) - 1) * random.random())
@@ -119,6 +119,8 @@ def find_best_cycle(road_map):
         if new_map2[1] < best_distance:
             best_distance = new_map2[1]
             best_map = copy.copy(new_map2[0])
+        else:
+            road_map = copy.copy(best_map)
         counter += 1
 
     return (best_map, best_distance)
