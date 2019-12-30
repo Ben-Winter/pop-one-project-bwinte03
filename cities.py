@@ -125,36 +125,6 @@ def find_best_cycle(road_map):
 
     return (best_map, best_distance)
 
-    #counter = 0
-    #continue_map = road_map
-    #best_map = road_map
-    #print("FIRST best map", best_map)
-    #best_distance = compute_total_distance(road_map)
-    #while counter <= 20:
-    #    new_map1 = shift_cities(continue_map)
-    #    num1 = round((len(new_map1) - 1) * random.random())
-    #    num2 = round((len(new_map1) - 1) * random.random())
-    #    new_map2 = swap_cities(new_map1, new_map1[num1][1], new_map1[num2][1])
-    #    print(new_map2)
-    #    check_distance = new_map2[1]
-    #    print("Check dist:", check_distance)
-    #    print("Check best dist:", best_distance)
-    #    if float(check_distance) < float(best_distance):
-    #        best_distance = check_distance
-    #        best_map = new_map2[0]
-    #        print("Best_Map: ", best_map)
-    #        print("Best Dist: ", best_distance)
-    #        continue_map = new_map2[0]
-    #    else:
-    #        continue_map = new_map2[0]
-    #        print("Best_Map2: ", best_map)
-    #    counter += 1
-
-    #print(best_map)
-    #print(compute_total_distance(best_map))
-    #print(best_distance)
-
-    #return (best_map, compute_total_distance(best_map))
     """
     Using a combination of `swap_cities` and `shift_cities`, 
     try `10000` swaps/shifts, and each time keep the best cycle found so far. 
@@ -190,40 +160,47 @@ def print_map(road_map):
 
 def visualise(road_map):
 
-    x = []
-    for v in range(0, len(road_map)):
-        x.append(road_map[v][2])
-    y = []
-    for w in range(0, len(road_map)):
-        y.append(road_map[w][3])
+    try:
+        x = []
+        for v in range(0, len(road_map)):
+            x.append(road_map[v][2])
+        y = []
+        for w in range(0, len(road_map)):
+            y.append(road_map[w][3])
 
-    # Dynamically set boundaries for map and extend by 1 to ensure nothing out of bounds from rounding
-    x_max = round(max(x) + 1)
-    x_min = round(min(x) - 1)
-    y_max = round(max(y) + 1)
-    y_min = round(min(y) - 1)
+        # Dynamically set boundaries for map and extend by 1 to ensure nothing out of bounds from rounding
+        x_max = round(max(x))
+        x_min = round(min(x))
+        y_max = round(max(y))
+        y_min = round(min(y))
 
-    print(str('').ljust(5), end='')
-    for s in range(y_min, y_max, 1):
-        print(str(s).ljust(4), end=" ")
+        if x_max < -90 or x_max > 90 or y_max < -180 or y_max > 180:
+            raise ValueError
 
-    print()
-    for i in range(x_min, x_max, 1):
-        print(str(i).ljust(4), end='  ')
-        for j in range(y_min, y_max, 1):
-            for k in range(0, len(road_map)):
-                if i == round((road_map[k][2])) and j == round((road_map[k][3])):
-                    print(str(k).ljust(3), end="  ")
-                    break
-            else:
-                print(str('.').ljust(3), end="  ")
+        print(str('').ljust(5), end='')
+        for s in range(y_min, y_max, 1):
+            print(str(s).ljust(4), end=" ")
+
         print()
+        for i in range(x_min, x_max, 1):
+            print(str(i).ljust(4), end='  ')
+            for j in range(y_min, y_max, 1):
+                for k in range(0, len(road_map)):
+                    if i == round((road_map[k][2])) and j == round((road_map[k][3])):
+                        print(str(k).ljust(3), end="  ")
+                        break
+                else:
+                    print(str('.').ljust(3), end="  ")
+            print()
+
+    except ValueError:
+        print('ERROR: Latitude is out of range -90 to 90 OR Longitude is out of range -180 to 180')
 
 def main():
     try:
         road_map = read_cities('city-data.txt')
     except OSError:
-        print('Could not open/read file - check file name is "city-data.txt" and data saved in same directory as cities.py')
+        print('Could not open/read file - check file is named "city-data.txt" and data saved in same directory as cities.py')
         exit()
     starting_distance = round(compute_total_distance(road_map),2)
     print('### STARTING ROAD MAP ###')
