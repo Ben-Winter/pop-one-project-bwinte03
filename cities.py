@@ -32,7 +32,22 @@ def read_cities(file_name):
     pass
   
 def compute_total_distance(road_map):
-    #sqrt((x1 - x2) ^ 2 + (y1 - y2) ^ 2)
+
+    x = []
+    for v in range(0, len(road_map)):
+        x.append(road_map[v][2])
+    y = []
+    for w in range(0, len(road_map)):
+        y.append(road_map[w][3])
+
+    x_max = round(max(x))
+    x_min = round(min(x))
+    y_max = round(max(y))
+    y_min = round(min(y))
+
+    if x_min < -90 or x_max > 90 or y_min < -180 or y_max > 180:
+            raise ValueError('ERROR: Latitude is out of range -90 to 90 OR Longitude is out of range -180 to 180')
+
     distance = 0
 
     for i in range(0,len(road_map)-1):
@@ -44,7 +59,6 @@ def compute_total_distance(road_map):
     y_last = (road_map[len(road_map)-1][3] - road_map[0][3])**2
 
     last_distance = math.sqrt(x_last+y_last)
-
     total_distance = distance + last_distance
 
     return total_distance
@@ -160,55 +174,49 @@ def print_map(road_map):
 
 def visualise(road_map):
 
-    try:
-        x = []
-        for v in range(0, len(road_map)):
-            x.append(road_map[v][2])
-        y = []
-        for w in range(0, len(road_map)):
-            y.append(road_map[w][3])
+    x = []
+    for v in range(0, len(road_map)):
+        x.append(road_map[v][2])
+    y = []
+    for w in range(0, len(road_map)):
+        y.append(road_map[w][3])
 
-        # Dynamically set boundaries for map and extend by 1 to ensure nothing out of bounds from rounding
-        x_max = round(max(x))
-        x_min = round(min(x))
-        y_max = round(max(y))
-        y_min = round(min(y))
+    # Dynamically set boundaries for map and extend by 1 to ensure nothing out of bounds from rounding
+    x_max = round(max(x))
+    x_min = round(min(x))
+    y_max = round(max(y))
+    y_min = round(min(y))
 
-        if x_max < -90 or x_max > 90 or y_max < -180 or y_max > 180:
-            raise ValueError
+    print(str('').ljust(5), end='')
+    for s in range(y_min, y_max, 1):
+        print(str(s).ljust(4), end=" ")
 
-        print(str('').ljust(5), end='')
-        for s in range(y_min, y_max, 1):
-            print(str(s).ljust(4), end=" ")
-
+    print()
+    for i in range(x_min, x_max, 1):
+        print(str(i).ljust(4), end='  ')
+        for j in range(y_min, y_max, 1):
+            for k in range(0, len(road_map)):
+                if i == round((road_map[k][2])) and j == round((road_map[k][3])):
+                    print(str(k).ljust(3), end="  ")
+                    break
+            else:
+                print(str('.').ljust(3), end="  ")
         print()
-        for i in range(x_min, x_max, 1):
-            print(str(i).ljust(4), end='  ')
-            for j in range(y_min, y_max, 1):
-                for k in range(0, len(road_map)):
-                    if i == round((road_map[k][2])) and j == round((road_map[k][3])):
-                        print(str(k).ljust(3), end="  ")
-                        break
-                else:
-                    print(str('.').ljust(3), end="  ")
-            print()
 
-    except ValueError:
-        print('ERROR: Latitude is out of range -90 to 90 OR Longitude is out of range -180 to 180')
 
 def main():
     try:
         road_map = read_cities('city-data.txt')
     except OSError:
-        print('Could not open/read file - check file is named "city-data.txt" and data saved in same directory as cities.py')
+        print('ERROR: Could not open/read file - check file is named "city-data.txt" and data saved in same directory as cities.py')
         exit()
     starting_distance = round(compute_total_distance(road_map),2)
-    print('### STARTING ROAD MAP ###')
-    print('-------------------------')
+    print('###   STARTING ROAD MAP   ###')
+    print('-----------------------------')
     print_cities(road_map)
     print('')
-    print('### STARTING DISTANCE ###')
-    print('-------------------------')
+    print('###   STARTING DISTANCE   ###')
+    print('-----------------------------')
     print(starting_distance)
     print('')
     best = find_best_cycle(road_map)

@@ -28,6 +28,14 @@ def test_compute_total_distance():
     assert compute_total_distance(road_map3)==\
            pytest.approx(33.422+10.693+23.614, 0.01)
 
+    with pytest.raises(ValueError):
+        assert compute_total_distance([('Alaska', 'Juneau', -91, -134.41974)])
+    with pytest.raises(ValueError):
+        assert compute_total_distance([('Alaska', 'Juneau', 91, -134.41974)])
+    with pytest.raises(ValueError):
+        assert compute_total_distance([('Alaska', 'Juneau', 58.301935, -181)])
+    with pytest.raises(ValueError):
+        assert compute_total_distance([('Alaska', 'Juneau', 58.301935, 181)])
     '''add your further tests'''
 
 def test_swap_cities():
