@@ -28,6 +28,10 @@ def test_compute_total_distance():
     assert compute_total_distance(road_map3)==\
            pytest.approx(33.422+10.693+23.614, 0.01)
 
+    with pytest.raises(TypeError):
+        assert compute_total_distance([('California', 'Sacramento', '38.555605', -121.468926)])
+    with pytest.raises(TypeError):
+        assert compute_total_distance([('California', 'Sacramento', 38.555605, '-121.468926')])
     with pytest.raises(ValueError):
         assert compute_total_distance([('Alaska', 'Juneau', -91, -134.41974)])
     with pytest.raises(ValueError):
@@ -39,6 +43,7 @@ def test_compute_total_distance():
     '''add your further tests'''
 
 def test_swap_cities():
+
     road_map1 = [('Alabama', 'Montgomery', 32.361538, -86.279118),\
                  ('Alaska', 'Juneau', 58.301935, -134.41974),\
                  ('Arizona', 'Phoenix', 33.448457, -112.073844),\
@@ -127,6 +132,8 @@ def test_swap_cities():
 
     '''add your tests'''
 
+
+
 def test_shift_cities():
     road_map1 = [('Alabama', 'Montgomery', 32.361538, -86.279118), \
                  ('Alaska', 'Juneau', 58.301935, -134.41974), \
@@ -173,6 +180,10 @@ def test_shift_cities():
             ('Arkansas', 'Little Rock', 34.736009, -92.331122), \
             ('California', 'Sacramento', 38.555605, -121.468926), \
             ('Colorado', 'Denver', 39.7391667, -104.984167)]
+
+    road_map2 = [('Alabama', 'Montgomery', 32.361538, -86.279118)]
+    assert shift_cities(road_map2)== \
+           [('Alabama', 'Montgomery', 32.361538, -86.279118)]
 
     '''add your tests'''
 

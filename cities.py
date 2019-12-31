@@ -36,9 +36,15 @@ def compute_total_distance(road_map):
     x = []
     for v in range(0, len(road_map)):
         x.append(road_map[v][2])
+        check = isinstance(road_map[v][2], (int, float, complex))
+        if check == False:
+            raise TypeError('ERROR: Latitude is not a numeric data type')
     y = []
     for w in range(0, len(road_map)):
         y.append(road_map[w][3])
+        check = isinstance(road_map[v][3], (int, float, complex))
+        if check == False:
+            raise TypeError('ERROR: Longitude is not a numeric data type')
 
     x_max = round(max(x))
     x_min = round(min(x))
@@ -79,6 +85,7 @@ def print_cities(road_map):
     pass
 
 def swap_cities(road_map, index1, index2):
+
     if index1 == index2:
         return (road_map, compute_total_distance(road_map))
 
@@ -181,11 +188,11 @@ def visualise(road_map):
     for w in range(0, len(road_map)):
         y.append(road_map[w][3])
 
-    # Dynamically set boundaries for map and extend by 1 to ensure nothing out of bounds from rounding
-    x_max = round(max(x))
-    x_min = round(min(x))
-    y_max = round(max(y))
-    y_min = round(min(y))
+    # Dynamically set boundaries for map, add 1 and minus 1 to prevent losing cities at the edges
+    x_max = round(max(x)+1)
+    x_min = round(min(x)-1)
+    y_max = round(max(y)+1)
+    y_min = round(min(y)-1)
 
     print(str('').ljust(5), end='')
     for s in range(y_min, y_max, 1):
