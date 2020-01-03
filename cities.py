@@ -3,6 +3,17 @@ import random
 import copy
 
 def read_cities(file_name):
+    """
+    Read in the cities from the given `file_name`, and return
+    them as a list of four-tuples:
+
+      [(state, city, latitude, longitude), ...]
+
+    Use this as your initial `road_map`, that is, the cycle
+
+      Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
+    """
+
     infile = open(file_name, 'r')
 
     with infile:
@@ -20,19 +31,14 @@ def read_cities(file_name):
 
     return road_map
 
-    """
-    Read in the cities from the given `file_name`, and return 
-    them as a list of four-tuples: 
-
-      [(state, city, latitude, longitude), ...] 
-
-    Use this as your initial `road_map`, that is, the cycle 
-
-      Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
-    """
     pass
   
 def compute_total_distance(road_map):
+    """
+    Returns, as a floating point number, the sum of the distances of all
+    the connections in the `road_map`. Remember that it's a cycle, so that
+    (for example) in the initial `road_map`, Wyoming connects to Alabama...
+    """
 
     # Error handling:
     x = []
@@ -72,25 +78,29 @@ def compute_total_distance(road_map):
 
     return total_distance
 
-    """
-    Returns, as a floating point number, the sum of the distances of all 
-    the connections in the `road_map`. Remember that it's a cycle, so that 
-    (for example) in the initial `road_map`, Wyoming connects to Alabama...
-    """
-
 def print_cities(road_map):
+    """
+    Prints a list of cities, along with their locations.
+    Print only one or two digits after the decimal point.
+    """
 
     print(str('CITY').ljust(20)+str('LATITUDE').ljust(10)+str('LONGITUDE').ljust(10))
     for i in range(0, len(road_map)):
         print(str(road_map[i][1]).ljust(20)+str(round(road_map[i][2],2)).ljust(10)+str(round(road_map[i][3],2)).ljust(10))
 
-    """
-    Prints a list of cities, along with their locations. 
-    Print only one or two digits after the decimal point.
-    """
     pass
 
 def swap_cities(road_map, index1, index2):
+    """
+    Take the city at location `index` in the `road_map`, and the
+    city at location `index2`, swap their positions in the `road_map`,
+    compute the new total distance, and return the tuple
+
+        (new_road_map, new_total_distance)
+
+    Allow for the possibility that `index1=index2`,
+    and handle this case correctly.
+    """
 
     if index1 == index2:
         return (road_map, compute_total_distance(road_map))
@@ -109,18 +119,12 @@ def swap_cities(road_map, index1, index2):
 
     return (road_map, compute_total_distance(road_map))
 
-    """
-    Take the city at location `index` in the `road_map`, and the 
-    city at location `index2`, swap their positions in the `road_map`, 
-    compute the new total distance, and return the tuple 
-
-        (new_road_map, new_total_distance)
-
-    Allow for the possibility that `index1=index2`,
-    and handle this case correctly.
-    """
-
 def shift_cities(road_map):
+    """
+    For every index i in the `road_map`, the city at the position i moves
+    to the position i+1. The city at the last position moves to the position
+    0. Return the new road map.
+    """
 
     new_map = [road_map[-1]]
     new_map.extend(road_map)
@@ -130,13 +134,14 @@ def shift_cities(road_map):
 
     return road_map
 
-    """
-    For every index i in the `road_map`, the city at the position i moves
-    to the position i+1. The city at the last position moves to the position
-    0. Return the new road map. 
-    """
 
 def find_best_cycle(road_map):
+    """
+    Using a combination of `swap_cities` and `shift_cities`,
+    try `10000` swaps/shifts, and each time keep the best cycle found so far.
+    After `10000` swaps/shifts, return the best cycle found so far.
+    Use randomly generated indices for swapping.
+    """
 
     counter = 0
     best_distance = compute_total_distance(road_map)
@@ -155,15 +160,14 @@ def find_best_cycle(road_map):
 
     return (best_map, best_distance)
 
-    """
-    Using a combination of `swap_cities` and `shift_cities`, 
-    try `10000` swaps/shifts, and each time keep the best cycle found so far. 
-    After `10000` swaps/shifts, return the best cycle found so far.
-    Use randomly generated indices for swapping.
-    """
     pass
 
 def print_map(road_map):
+    """
+    Prints, in an easily understandable format, the cities and
+    their connections, along with the cost for each connection
+    and the total cost.
+    """
 
     for i in range(0, len(road_map[0])-1):
         x = (road_map[0][i][2] - road_map[0][i+1][2])**2
@@ -181,14 +185,13 @@ def print_map(road_map):
     print()
     print("Total Cost: ", str(round(road_map[1],2)))
 
-    """
-    Prints, in an easily understandable format, the cities and 
-    their connections, along with the cost for each connection 
-    and the total cost.
-    """
     pass
 
 def visualise(road_map):
+    """
+    Creates a textual print, displaying the relative location
+    of all the cities
+    """
 
     x = []
     for v in range(0, len(road_map)):
@@ -223,14 +226,22 @@ def visualise(road_map):
 
 
 def main():
+    """
+    Reads in, and prints out, the city data, then creates the "best"
+    cycle and prints it out.
+    """
+
+    print('Enter the name of the city file (E.g. file-name.txt): ', end='')
+    file_name = str(input())
 
     try:
-        road_map = read_cities('city-data.txt')
+        road_map = read_cities(file_name)
     except OSError:
-        print('ERROR: Could not open/read file - check file is named "city-data.txt" and data saved in same directory as cities.py')
+        print('ERROR: Could not open/read file - check file name is correct and data saved in same directory as cities.py')
         exit()
 
     starting_distance = round(compute_total_distance(road_map),2)
+    print('')
     print('###   STARTING ROAD MAP   ###')
     print('-----------------------------')
     print_cities(road_map)
@@ -250,10 +261,6 @@ def main():
     print('-------------------------------------------------------------------------')
     visualise(best[0])
 
-    """
-    Reads in, and prints out, the city data, then creates the "best"
-    cycle and prints it out.
-    """
     pass
 
 if __name__ == "__main__":
