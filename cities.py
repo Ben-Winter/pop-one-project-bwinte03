@@ -19,6 +19,7 @@ def read_cities(file_name):
     infile.close()
 
     return road_map
+
     """
     Read in the cities from the given `file_name`, and return 
     them as a list of four-tuples: 
@@ -33,6 +34,7 @@ def read_cities(file_name):
   
 def compute_total_distance(road_map):
 
+    # Error handling:
     x = []
     for v in range(0, len(road_map)):
         x.append(road_map[v][2])
@@ -54,6 +56,7 @@ def compute_total_distance(road_map):
     if x_min < -90 or x_max > 90 or y_min < -180 or y_max > 180:
             raise ValueError('ERROR: Latitude is out of range -90 to 90 OR Longitude is out of range -180 to 180')
 
+    # Computation code
     distance = 0
 
     for i in range(0,len(road_map)-1):
@@ -68,6 +71,7 @@ def compute_total_distance(road_map):
     total_distance = distance + last_distance
 
     return total_distance
+
     """
     Returns, as a floating point number, the sum of the distances of all 
     the connections in the `road_map`. Remember that it's a cycle, so that 
@@ -75,9 +79,11 @@ def compute_total_distance(road_map):
     """
 
 def print_cities(road_map):
+
     print(str('CITY').ljust(20)+str('LATITUDE').ljust(10)+str('LONGITUDE').ljust(10))
     for i in range(0, len(road_map)):
         print(str(road_map[i][1]).ljust(20)+str(round(road_map[i][2],2)).ljust(10)+str(round(road_map[i][3],2)).ljust(10))
+
     """
     Prints a list of cities, along with their locations. 
     Print only one or two digits after the decimal point.
@@ -102,6 +108,7 @@ def swap_cities(road_map, index1, index2):
             road_map[i] = a
 
     return (road_map, compute_total_distance(road_map))
+
     """
     Take the city at location `index` in the `road_map`, and the 
     city at location `index2`, swap their positions in the `road_map`, 
@@ -114,11 +121,13 @@ def swap_cities(road_map, index1, index2):
     """
 
 def shift_cities(road_map):
+
     new_map = [road_map[-1]]
     new_map.extend(road_map)
     new_map.pop(-1)
     for i in range(len(road_map)):
         road_map[i] = new_map[i]
+
     return road_map
 
     """
@@ -194,15 +203,17 @@ def visualise(road_map):
     y_max = round(max(y)+1)
     y_min = round(min(y)-1)
 
-    print(str('').ljust(5), end='')
+    # Print longitude header:
+    print(str('').ljust(6), end='')
     for s in range(y_min, y_max, 1):
         print(str(s).ljust(4), end=" ")
 
+    # Print rest of visualisation:
     print()
-    for i in range(x_min, x_max, 1):
+    for i in range(x_max, x_min, -1):
         print(str(i).ljust(4), end='  ')
         for j in range(y_min, y_max, 1):
-            for k in range(0, len(road_map)):
+            for k in range(0, len(road_map)-1):
                 if i == round((road_map[k][2])) and j == round((road_map[k][3])):
                     print(str(k).ljust(3), end="  ")
                     break
@@ -212,11 +223,13 @@ def visualise(road_map):
 
 
 def main():
+
     try:
         road_map = read_cities('city-data.txt')
     except OSError:
         print('ERROR: Could not open/read file - check file is named "city-data.txt" and data saved in same directory as cities.py')
         exit()
+
     starting_distance = round(compute_total_distance(road_map),2)
     print('###   STARTING ROAD MAP   ###')
     print('-----------------------------')
@@ -230,10 +243,11 @@ def main():
     print('### BEST CYCLE & DISTANCE ###')
     print('-----------------------------')
     print_map(best)
-    print('-----------------------------------------------------------------------------')
-    print('### VISUALISATION (VERTICAL AXIS = LATITUDE, HORIZONTAL AXIS = LONGITUDE) ###')
-    print('###                  ^ Key for cities displayed above ^                   ###')
-    print('-----------------------------------------------------------------------------')
+    print('-------------------------------------------------------------------------')
+    print('| VISUALISATION (VERTICAL AXIS = LATITUDE, HORIZONTAL AXIS = LONGITUDE) |')
+    print('|                  ^ Key for cities displayed above ^                   |')
+    print('|          Connections with a distance <1 may not be displayed          |')
+    print('-------------------------------------------------------------------------')
     visualise(best[0])
 
     """
