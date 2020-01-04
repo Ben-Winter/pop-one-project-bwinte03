@@ -14,7 +14,12 @@ def read_cities(file_name):
       Alabama -> Alaska -> Arizona -> ... -> Wyoming -> Alabama.
     """
 
-    infile = open(file_name, 'r')
+    try:
+        infile = open(file_name, 'r')
+    except OSError:
+        print(
+            'ERROR: Could not open/read file - check file name is correct and data saved in same directory as cities.py')
+        exit()
 
     with infile:
         road_in = [x.strip().split('\t') for x in infile]
@@ -62,21 +67,15 @@ def compute_total_distance(road_map):
     if x_min < -90 or x_max > 90 or y_min < -180 or y_max > 180:
             raise ValueError('ERROR: Latitude is out of range -90 to 90 OR Longitude is out of range -180 to 180')
 
-    # Computation code
+    # Computation code:
     distance = 0
 
-    for i in range(0,len(road_map)-1):
-        x = (road_map[i][2] - road_map[i+1][2])**2
-        y = (road_map[i][3] - road_map[i+1][3])**2
+    for i in range(0,len(road_map)):
+        x = (road_map[i][2] - road_map[(i + 1) % len(road_map)][2])**2
+        y = (road_map[i][3] - road_map[(i + 1) % len(road_map)][3])**2
         distance += math.sqrt(x+y)
 
-    x_last = (road_map[len(road_map)-1][2] - road_map[0][2])**2
-    y_last = (road_map[len(road_map)-1][3] - road_map[0][3])**2
-
-    last_distance = math.sqrt(x_last+y_last)
-    total_distance = distance + last_distance
-
-    return total_distance
+    return distance
 
 def print_cities(road_map):
     """
@@ -133,7 +132,6 @@ def shift_cities(road_map):
         road_map[i] = new_map[i]
 
     return road_map
-
 
 def find_best_cycle(road_map):
     """
@@ -200,7 +198,7 @@ def visualise(road_map):
     for w in range(0, len(road_map)):
         y.append(road_map[w][3])
 
-    # Dynamically set boundaries for map, add 1 and minus 1 to prevent losing cities at the edges
+    # Dynamically set boundaries for map, add 1 and minus 1 to prevent losing cities at the edges:
     x_max = round(max(x)+1)
     x_min = round(min(x)-1)
     y_max = round(max(y)+1)
@@ -224,7 +222,6 @@ def visualise(road_map):
                 print(str('.').ljust(3), end="  ")
         print()
 
-
 def main():
     """
     Reads in, and prints out, the city data, then creates the "best"
@@ -233,13 +230,7 @@ def main():
 
     print('Enter the name of the city file (E.g. file-name.txt): ', end='')
     file_name = str(input())
-
-    try:
-        road_map = read_cities(file_name)
-    except OSError:
-        print('ERROR: Could not open/read file - check file name is correct and data saved in same directory as cities.py')
-        exit()
-
+    road_map = read_cities(file_name)
     starting_distance = round(compute_total_distance(road_map),2)
     print('')
     print('###   STARTING ROAD MAP   ###')

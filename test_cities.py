@@ -9,7 +9,10 @@ def test_compute_total_distance():
                 ("Delaware", "Dover", 39.161921, -75.526755),\
                 ("Minnesota", "Saint Paul", 44.95, -93.094)]
     assert type(compute_total_distance(road_map1)) is float
+    assert compute_total_distance(road_map1) != ''
+    assert compute_total_distance(road_map1) != 0
     assert compute_total_distance(road_map1) > 0
+    assert (compute_total_distance(road_map1) < 0) is False
     assert compute_total_distance(road_map1)==\
            pytest.approx(9.386+18.496+10.646, 0.01)
 
@@ -18,14 +21,17 @@ def test_compute_total_distance():
                  ('Delaware', 'Dover', 39.161921, -75.526755), \
                  ('Florida', 'Tallahassee', 30.4518, -84.27277)]
     assert type(compute_total_distance(road_map2)) is float
+    assert compute_total_distance(road_map2) != ''
+    assert compute_total_distance(road_map2) != 0
     assert compute_total_distance(road_map2) > 0
+    assert (compute_total_distance(road_map2) < 0) is False
     assert compute_total_distance(road_map2)==\
            pytest.approx(3.861+12.343+16.202, 0.01)
 
     # Check error raising:
-    with pytest.raises(TypeError): # Check for string in lat
+    with pytest.raises(TypeError): # Check for non-numeric in latitude
         assert compute_total_distance([('California', 'Sacramento', '38.555605', -121.468926)])
-    with pytest.raises(TypeError): # Check for string in long
+    with pytest.raises(TypeError): # Check for non-numeric in longitude
         assert compute_total_distance([('California', 'Sacramento', 38.555605, '-121.468926')])
     with pytest.raises(ValueError): # Check for lat outside -90 min
         assert compute_total_distance([('Alaska', 'Juneau', -91, -134.41974)])
@@ -144,7 +150,7 @@ def test_shift_cities():
     assert shift_cities(road_map2) != ''
     assert shift_cities(road_map3) != ''
 
-    # Test shift 1
+    # Test shift 1:
     assert shift_cities(road_map1)== \
            [('Florida', 'Tallahassee', 30.4518, -84.27277), \
             ('Alabama', 'Montgomery', 32.361538, -86.279118), \
@@ -156,7 +162,7 @@ def test_shift_cities():
             ('Connecticut', 'Hartford', 41.767, -72.677), \
             ('Delaware', 'Dover', 39.161921, -75.526755)]
 
-    # Test shift 2
+    # Test shift 2:
     assert shift_cities(road_map1)== \
            [('Delaware', 'Dover', 39.161921, -75.526755), \
             ('Florida', 'Tallahassee', 30.4518, -84.27277), \
@@ -168,7 +174,7 @@ def test_shift_cities():
             ('Colorado', 'Denver', 39.7391667, -104.984167), \
             ('Connecticut', 'Hartford', 41.767, -72.677)]
 
-    # Test shift 3
+    # Test shift 3:
     assert shift_cities(road_map1)== \
            [('Connecticut', 'Hartford', 41.767, -72.677), \
             ('Delaware', 'Dover', 39.161921, -75.526755), \
