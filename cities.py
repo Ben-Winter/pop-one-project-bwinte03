@@ -35,8 +35,6 @@ def read_cities(file_name):
     infile.close()
 
     return road_map
-
-    pass
   
 def compute_total_distance(road_map):
     """
@@ -86,8 +84,6 @@ def print_cities(road_map):
     print(str('CITY').ljust(20)+str('LATITUDE').ljust(10)+str('LONGITUDE').ljust(10))
     for i in range(0, len(road_map)):
         print(str(road_map[i][1]).ljust(20)+str(round(road_map[i][2],2)).ljust(10)+str(round(road_map[i][3],2)).ljust(10))
-
-    pass
 
 def swap_cities(road_map, index1, index2):
     """
@@ -158,8 +154,6 @@ def find_best_cycle(road_map):
 
     return (best_map, best_distance)
 
-    pass
-
 def print_map(road_map):
     """
     Prints, in an easily understandable format, the cities and
@@ -182,8 +176,6 @@ def print_map(road_map):
 
     print()
     print("Total Cost: ", str(round(road_map[1],2)))
-
-    pass
 
 def visualise(road_map):
     """
